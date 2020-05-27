@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend code for redis db",
+  "main": "backend.js",
+  "scripts": {
+    "test": "nodemon --watch backend.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "redis": "^3.0.2",
+    "systeminformation": "^4.26.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
