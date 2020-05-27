@@ -14,13 +14,17 @@
       <v-row>
         <div class="d-inline-block">
           <div class="d-flex">
-            <v-icon class="black--text ml-2">mdi-gauge</v-icon>
-            <v-card-subtitle class="headline black--text">CPU Speed</v-card-subtitle>
+            <v-icon class="black--text ml-2">mdi-desktop-classic</v-icon>
+            <v-card-title class="headline">{{ systemStaticData.osInfo.hostname }}</v-card-title>
           </div>
           <div class="d-inline-block container mx-auto">
-            <v-card class="black-lighten-2 mx-auto">
+            <v-card class="black-lighten-2 mx-2 d-inline-flex">
               <barchart
-              :chartdata="getChartData"/>
+              :chartdata="getCPUSpeedData"/>
+            </v-card>
+            <v-card class="black-lighten-2 mx-2 d-inline-flex">
+              <barchart
+              :chartdata="getCPUTemperatureData"/>
             </v-card>
           </div>
         </div>
@@ -28,7 +32,7 @@
       <v-row>
       <div class="d-inline-flex">
         <v-icon class="black--text ml-2">mdi-desktop-classic</v-icon>
-        <v-card-title class="headline">{{ systemStaticData.osInfo.hostname }}</v-card-title>
+        <v-card-title class="headline">Static System Data</v-card-title>
       </div>
         <v-expansion-panels inset hover tile class="ma-2">
           <v-expansion-panel
@@ -89,8 +93,7 @@ export default {
     getAvgSpeed: function () {
       return this.systemDynamicData.cpuCurrentspeed.avg
     },
-    getChartData: function () {
-      console.log(`cpu cores: ${this.systemDynamicData.cpuCurrentspeed.cores}`)
+    getCPUSpeedData: function () {
       const cores = this.systemDynamicData.cpuCurrentspeed.cores // grab the data for the chart
       cores.push(this.systemStaticData.cpu.speedmax) // add a nother datapoint to the dataset, this is the maximum y value
       cores.push(0.0)
@@ -104,8 +107,24 @@ export default {
       }
       return ds
     },
+    getCPUTemperatureData: function () {
+      const temp = [this.getCPUTempF, 15, 50] // grab the data for the chart
+      const ds = {
+        labels: ['Main'],
+        datasets: [{
+          data: temp,
+          backgroundColor: 'rgba(94,120,143,0.5)',
+          label: 'Main Temperature',
+          barThickness: 50
+        }]
+      }
+      return ds
+    },
     getCPURatedSpeed: function () {
       return this.systemStaticData.cpu.speed
+    },
+    getCPUTempF: function () {
+      return (9 / 5) * this.systemDynamicData.cpuTemperature.main + 32
     }
   },
   methods: {
