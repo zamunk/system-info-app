@@ -108,7 +108,7 @@ export default {
       return ds
     },
     getCPUTemperatureData: function () {
-      const temp = [this.getCPUTempF, 15, 50] // grab the data for the chart
+      const temp = [this.getCPUTempF, 50, 80] // grab the data for the chart
       const ds = {
         labels: ['Main'],
         datasets: [{
